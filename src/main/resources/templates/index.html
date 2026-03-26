@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo Docker — Nguyễn Hải Đăng</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+        }
+        .container {
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 24px;
+            padding: 52px 48px;
+            max-width: 660px;
+            width: 92%;
+            text-align: center;
+            backdrop-filter: blur(14px);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+        }
+        .whale { font-size: 88px; margin-bottom: 18px; animation: bob 3s ease-in-out infinite; }
+        @keyframes bob { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)} }
+        h1 { font-size: 2.2rem; font-weight: 800; letter-spacing: -1px; color: #56d8f5; margin-bottom: 6px; }
+        .subtitle { color: rgba(255,255,255,0.55); font-size: 0.95rem; margin-bottom: 38px; }
+        .cards { display: flex; flex-direction: column; gap: 14px; margin-bottom: 32px; }
+        .card {
+            background: rgba(255,255,255,0.07);
+            border: 1px solid rgba(255,255,255,0.09);
+            border-radius: 14px;
+            padding: 18px 24px;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .card-icon { font-size: 1.6rem; flex-shrink: 0; }
+        .card-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px; color: #56d8f5; margin-bottom: 4px; }
+        .card-value { font-size: 1.05rem; font-weight: 600; }
+        .badge {
+            display: inline-block;
+            background: linear-gradient(90deg, #0099cc, #0055bb);
+            color: #fff;
+            padding: 8px 22px;
+            border-radius: 50px;
+            font-size: 0.88rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            margin-bottom: 22px;
+        }
+        .nav-btn {
+            display: inline-block;
+            padding: 13px 32px;
+            background: rgba(86,216,245,0.1);
+            border: 1.5px solid #56d8f5;
+            color: #56d8f5;
+            border-radius: 10px;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: background 0.25s, transform 0.15s;
+        }
+        .nav-btn:hover { background: rgba(86,216,245,0.22); transform: translateY(-2px); }
+        .status-dot {
+            display: inline-block;
+            width: 9px; height: 9px;
+            background: #4cfe8a;
+            border-radius: 50%;
+            margin-right: 7px;
+            box-shadow: 0 0 8px #4cfe8a;
+            animation: pulse 1.6s ease-in-out infinite;
+        }
+        @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+        .status-line { color: rgba(255,255,255,0.5); font-size: 0.82rem; margin-top: 24px; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="whale">🐳</div>
+    <h1>Demo Docker</h1>
+    <p class="subtitle">Spring Boot đang chạy thành công bên trong container!</p>
+
+    <div class="cards">
+        <div class="card">
+            <span class="card-icon">👤</span>
+            <div>
+                <div class="card-label">Sinh viên thực hiện</div>
+                <div class="card-value" th:text="${tenSinhVien}">Tên SV</div>
+            </div>
+        </div>
+        <div class="card">
+            <span class="card-icon">🆔</span>
+            <div>
+                <div class="card-label">Mã sinh viên</div>
+                <div class="card-value" th:text="${maSinhVien}">MSSV</div>
+            </div>
+        </div>
+        <div class="card">
+            <span class="card-icon">📚</span>
+            <div>
+                <div class="card-label">Môn học</div>
+                <div class="card-value" th:text="${monHoc}">Môn học</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="badge" th:text="${bai}">Bài 1 — Dockerfile</div>
+    <br>
+    <a class="nav-btn" href="/sinhvien">Xem Danh Sách Sinh Viên (Bài 2) →</a>
+
+    <p class="status-line">
+        <span class="status-dot"></span>
+        Ứng dụng đang hoạt động &nbsp;|&nbsp; Port 8080
+    </p>
+</div>
+</body>
+</html>

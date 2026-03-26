@@ -1,0 +1,36 @@
+# =====================================================
+# BAI 2: DOCKER COMPOSE - NGUYEN HAI DANG - 2280600668
+# Dong goi App (Spring Boot) + DB (MySQL) cung nhau
+# =====================================================
+
+services:
+  app-java: # Ten dich vu tu dat
+    build: . # Tim Dockerfile o thu muc hien tai de build
+    image: farolnguyen824/demo-docker-bai2:latest
+    ports:
+      - "8080:8080" # Mo cong cho sinh vien truy cap localhost:8080
+    depends_on:
+      db-mysql:
+        condition: service_healthy # Cho DB san sang roi moi chay App
+    environment:
+      # Cac bien chuan Spring Boot de tao DataSource
+      SPRING_DATASOURCE_URL: jdbc:mysql://db-mysql:3306/demo_docker_db?useSSL=false&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+
+  db-mysql:
+    image: mysql:8.0 # Tai thang image tu Docker Hub
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: demo_docker_db
+    volumes:
+      - db_data:/var/lib/mysql # Du lieu DB khong bi mat khi xoa container
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-proot"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+volumes:
+  db_data: # Khai bao volume dung chung

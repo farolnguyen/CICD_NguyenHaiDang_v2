@@ -25,7 +25,7 @@ jobs:
       - name: "Docker Login - Dang nhap Docker Hub"
         uses: docker/login-action@v3
         with:
-          username: ${{ secrets.farolnguyen824 }}
+          username: ${{ secrets.SECRETNAME }}
           password: ${{ secrets.DOCKERSECRET }}
 
       - name: "Xac nhan dang nhap thanh cong"
@@ -33,6 +33,6 @@ jobs:
           echo "=============================="
           echo "  DANG NHAP DOCKER HUB OK!"
           echo "=============================="
-          echo "User       : ${{ secrets.farolnguyen824 }}"
+          echo "User       : ${{ secrets.SECRETNAME }}"
           echo "Sinh vien  : Nguyen Hai Dang - 2280600668"
           echo "Trang thai : Dang nhap thanh cong!"

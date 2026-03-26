@@ -1,0 +1,74 @@
+# =====================================================
+# BUOC 3: BUILD & PUSH - Dong goi va Day Image
+# Action: docker/build-push-action
+# Quy trinh day du: Checkout -> Login -> Build -> Push
+# Image day len:
+#   farolnguyen824/demo-docker-bai1:latest (Bai 1)
+#   farolnguyen824/demo-docker-bai2:latest (Bai 2)
+# =====================================================
+
+name: "Buoc 3 - Build and Push Docker Images"
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build-and-push:
+    name: Dong goi va Day 2 Images len Docker Hub
+    runs-on: ubuntu-latest
+
+    steps:
+      # -----------------------------------------------
+      # BUOC 1: Lay code tu GitHub
+      # -----------------------------------------------
+      - name: "Checkout - Lay source code tu GitHub"
+        uses: actions/checkout@v4
+
+      # -----------------------------------------------
+      # BUOC 2: Dang nhap Docker Hub
+      # -----------------------------------------------
+      - name: "Docker Login - Dang nhap Docker Hub"
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      # -----------------------------------------------
+      # BUOC 3A: Build va Push IMAGE BAI 1
+      # (Standalone - khong can MySQL)
+      # -----------------------------------------------
+      - name: "Build & Push - Image Bai 1 (Dockerfile)"
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/demo-docker-bai1:latest
+
+      # -----------------------------------------------
+      # BUOC 3B: Build va Push IMAGE BAI 2
+      # (Docker Compose + MySQL)
+      # -----------------------------------------------
+      - name: "Build & Push - Image Bai 2 (Docker Compose)"
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/demo-docker-bai2:latest
+
+      # -----------------------------------------------
+      # Tong ket
+      # -----------------------------------------------
+      - name: "Tong ket - In ket qua CI/CD"
+        run: |
+          echo "============================================"
+          echo "  CI/CD HOAN THANH THANH CONG!"
+          echo "============================================"
+          echo "Sinh vien : Nguyen Hai Dang - 2280600668"
+          echo "Image 1   : ${{ secrets.DOCKERHUB_USERNAME }}/demo-docker-bai1:latest"
+          echo "Image 2   : ${{ secrets.DOCKERHUB_USERNAME }}/demo-docker-bai2:latest"
+          echo "Commit    : ${{ github.sha }}"
+          echo "Time      : $(date)"

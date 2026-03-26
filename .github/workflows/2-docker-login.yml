@@ -1,0 +1,38 @@
+# =====================================================
+# BUOC 2: DOCKER LOGIN - Dang nhap Docker Hub
+# Action: docker/login-action
+# Yeu cau GitHub Secrets:
+#   DOCKERHUB_USERNAME : ten dang nhap Docker Hub
+#   DOCKERHUB_TOKEN    : Access Token tao tren Docker Hub
+# =====================================================
+
+name: "Buoc 2 - Docker Login"
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  docker-login:
+    name: Dang nhap vao Docker Hub
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: "Checkout - Lay source code"
+        uses: actions/checkout@v4
+
+      - name: "Docker Login - Dang nhap Docker Hub"
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: "Xac nhan dang nhap thanh cong"
+        run: |
+          echo "=============================="
+          echo "  DANG NHAP DOCKER HUB OK!"
+          echo "=============================="
+          echo "User       : ${{ secrets.DOCKERHUB_USERNAME }}"
+          echo "Sinh vien  : Nguyen Hai Dang - 2280600668"
+          docker info | grep Username

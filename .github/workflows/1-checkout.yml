@@ -1,0 +1,34 @@
+# =====================================================
+# BUOC 1: CHECKOUT - Lay code tu GitHub
+# Action: actions/checkout
+# Chay khi: push len nhanh main
+# =====================================================
+
+name: "Buoc 1 - Checkout Code"
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch: # Cho phep chay thu cong tren GitHub
+
+jobs:
+  checkout-code:
+    name: Lay code tu GitHub Repository
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: "Checkout - Tai source code ve may chu GitHub"
+        uses: actions/checkout@v4
+
+      - name: "Kiem tra code da duoc lay thanh cong"
+        run: |
+          echo "=============================="
+          echo "  CODE DA DUOC LAY THANH CONG"
+          echo "=============================="
+          echo "Repository : ${{ github.repository }}"
+          echo "Branch     : ${{ github.ref_name }}"
+          echo "Commit     : ${{ github.sha }}"
+          echo "Sinh vien  : Nguyen Hai Dang - 2280600668"
+          echo ""
+          echo "Danh sach file trong du an:"
+          ls -la

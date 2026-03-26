@@ -32,8 +32,8 @@ jobs:
       - name: "Docker Login - Dang nhap Docker Hub"
         uses: docker/login-action@v3
         with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          username: ${{ secrets.SECRETNAME }}
+          password: ${{ secrets.DOCKERSECRET }}
 
       # -----------------------------------------------
       # BUOC 3A: Build va Push IMAGE BAI 1
@@ -45,7 +45,7 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/demo-docker-bai1:latest
+          tags: ${{ secrets.SECRETNAME }}/demo-docker-bai1:latest
 
       # -----------------------------------------------
       # BUOC 3B: Build va Push IMAGE BAI 2
@@ -57,7 +57,7 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/demo-docker-bai2:latest
+          tags: ${{ secrets.SECRETNAME }}/demo-docker-bai2:latest
 
       # -----------------------------------------------
       # Tong ket
@@ -68,7 +68,7 @@ jobs:
           echo "  CI/CD HOAN THANH THANH CONG!"
           echo "============================================"
           echo "Sinh vien : Nguyen Hai Dang - 2280600668"
-          echo "Image 1   : ${{ secrets.DOCKERHUB_USERNAME }}/demo-docker-bai1:latest"
-          echo "Image 2   : ${{ secrets.DOCKERHUB_USERNAME }}/demo-docker-bai2:latest"
+          echo "Image 1   : ${{ secrets.SECRETNAME }}/demo-docker-bai1:latest"
+          echo "Image 2   : ${{ secrets.SECRETNAME }}/demo-docker-bai2:latest"
           echo "Commit    : ${{ github.sha }}"
           echo "Time      : $(date)"

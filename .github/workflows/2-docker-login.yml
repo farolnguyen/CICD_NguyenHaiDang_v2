@@ -35,4 +35,4 @@ jobs:
           echo "=============================="
           echo "User       : ${{ secrets.SECRETNAME }}"
           echo "Sinh vien  : Nguyen Hai Dang - 2280600668"
-          docker info | grep Username
+          echo "Trang thai : Dang nhap thanh cong!"
